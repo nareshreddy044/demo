@@ -33,7 +33,7 @@ pipeline {
         stage('Publish Test Results') {
             steps {
                 // Publish test results if they are in JUnit format
-                junit '**/cypress/reports/*.xml'
+                junit 'cypress/reports/*.xml'
             }
         }
     }
