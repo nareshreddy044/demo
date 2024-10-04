@@ -15,6 +15,8 @@ pipeline {
                 script {
                     // Install project dependencies (including Cypress)
                     sh 'npm install'
+                    sh 'npm install --save-dev mocha-junit-reporter'
+
                 }
             }
         }
