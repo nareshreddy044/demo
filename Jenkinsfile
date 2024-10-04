@@ -59,9 +59,6 @@ pipeline {
                  subject: "Build #${currentBuild.number} - ${currentBuild.result}",
                  body: "Build failed. Check Jenkins for details."
         }
-        always {
-            echo 'Cleaning up...'
-            cleanWs()
-        }
+        
     }
 }
