@@ -13,10 +13,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Install project dependencies (including Cypress)
+                    echo 'Installing project dependencies...'
                     sh 'npm install'
                     sh 'npm install --save-dev mocha-junit-reporter'
-
                 }
             }
         }
@@ -24,6 +23,7 @@ pipeline {
         stage('Run Cypress Tests') {
             steps {
                 script {
+                    echo 'Running Cypress tests...'
                     // Run Cypress tests in headless mode
                     sh 'npx cypress run --headless --browser chrome'
                 }
@@ -32,16 +32,29 @@ pipeline {
 
         stage('Publish Test Results') {
             steps {
+                echo 'Publishing test results...'
                 // Publish test results if they are in JUnit format
-                junit '**/cypress/reports/junit/*.xml'
+                junit 'cypress/reports/junit/*.xml'
             }
         }
     }
 
     post {
+       success {
+            echo 'Build completed successfully!'
+            archiveArtifacts artifacts: 'cypress/reports/junit/*.xml', fingerprint: true
+            junit 'cypress/reports/junit/*.xml'
+        }
+        failure {
+            echo 'Build failed.'
+            // Send notifications for failure
+            mail to: 'your_email@example.com',
+                 subject: "Build #${currentBuild.number} - ${currentBuild.result}",
+                 body: "Build failed. Check Jenkins for details."
+        }
         always {
-            // Archive test reports and videos (optional)
-            archiveArtifacts artifacts: '**/cypress/screenshots/*, **/cypress/videos/*'
+            echo 'Cleaning up...'
+            cleanWs()
         }
     }
 }
