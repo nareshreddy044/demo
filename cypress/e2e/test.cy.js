@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('template spec new test', () => {
   it('passes', () => {
     cy.visit('https://example.cypress.io')
     cy.get("#navbar").should("exist")
