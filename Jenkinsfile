@@ -30,6 +30,15 @@ pipeline {
             }
         }
 
+        stage('List Test Results') {
+            steps {
+                script {
+                    echo 'Listing test results...'
+                    sh 'ls -R cypress/reports'
+                }
+            }
+        }
+
         stage('Publish Test Results') {
             steps {
                 echo 'Publishing test results...'
