@@ -51,7 +51,6 @@ pipeline {
     post {
        success {
             echo 'Build completed successfully!'
-            junit 'cypress/reports/junit/*.xml'
         }
         failure {
             echo 'Build failed.'
