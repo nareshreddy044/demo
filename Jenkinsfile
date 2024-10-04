@@ -51,7 +51,6 @@ pipeline {
     post {
        success {
             echo 'Build completed successfully!'
-            archiveArtifacts artifacts: 'cypress/reports/junit/*.xml', fingerprint: true
             junit 'cypress/reports/junit/*.xml'
         }
         failure {
