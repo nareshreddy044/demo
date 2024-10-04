@@ -1,9 +1,14 @@
-const { defineConfig } = require('cypress');
+const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  reporter: 'mocha-junit-reporter',
-  reporterOptions: {
-    mochaFile: 'cypress/reports/junit/results-[hash].xml', // Ensure this path matches the archiving path in Jenkins
-  },
-  // Other Cypress configurations...
+  e2e: {
+    setupNodeEvents(on, config) {
+      // implement node event listeners here
+    },
+    screenshotOnRunFailure: true,
+    reporter: "mocha-junit-reporter",
+    reporterOptions: {
+      mochaFile: "cypress/reports/junit/test-results-[hash].xml"
+    }
+  }
 });
